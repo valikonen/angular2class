@@ -4,7 +4,7 @@ import { ApiService } from './api';
 @Injectable()
 export class NoteService { 
 
-    path: string = './notes';
+    path: string = '/notes';
     
     constructor(private api: ApiService) {
         
@@ -17,6 +17,6 @@ export class NoteService {
         return this.api.get(this.path);
     }
     completeNote(note) {
-        return this.api.delete(`${this.path}/${note.is}`);
+        return this.api.delete(`${this.path}/${note.id}`);
     }
 }

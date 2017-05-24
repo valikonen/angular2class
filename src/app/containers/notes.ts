@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NoteService } from '../services';
 
 @Component({
   selector: 'notes',
@@ -11,10 +12,10 @@ import { Component } from '@angular/core';
         <div class="row between-xs">
 
           <note-card
-            *ngFor="let note of notes; let i = index"
+            *ngFor="let note of notes"
             class="col-xs-4"
             [note]="note"
-            (noteOutput)="removeNote(i)">
+            (noteOutput)="removeNote($event)">
           </note-card>
 
         </div>
@@ -32,30 +33,36 @@ import { Component } from '@angular/core';
 })
 
 export class Notes {
-  notes = [
-    {
-      title: 'Chroes',
-      value: 'Don\'t forget to clean up',
-      color: 'lightblue'
-    },
-    {
-      title: 'Cook',
-      value: 'Cook your food',
-      color: 'lightyellow'
-    },
-    {
-      title: 'Doggy',
-      value: 'Walk to the dog',
-      color: 'lightgreen'
-    }
-  ];
+  notes = [];
 
-  removeNote(index){
-    this.notes.splice(index, 1);
+  constructor(private noteService: NoteService){
+    this.noteService.getNotes()
+      .subscribe(res => {
+        this.notes = res;
+      });
+  }
+
+  onCreateNote(note){
+    this.noteService.createNote(note)
+      .subscribe(note => this.notes.push(note));
+  }
+
+  removeNote(note){
+    this.noteService.completeNote(note)
+      .subscribe( note => {
+        const index = this.notes.map(function(item){
+          return item.id;
+        }).indexOf(note.id);
+        
+        this.notes.splice(index, 1);
+        
+      });
   }
   addNote(note){
-    console.log('note: ', note);
+    
     this.notes.push(note);
   }
+
+
 
 }

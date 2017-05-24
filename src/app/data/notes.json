@@ -1,0 +1,20 @@
+{
+    "notes": [{
+        "id": 1,
+        "title": "Chroes",
+        "value": "Don't forget to clean up",
+        "color": "lightblue"
+    },
+    {
+        "id": 2,
+        "title": "Cook",
+        "value": "Cook your food",
+        "color": "lightyellow"
+    },
+    {
+        "id": 3,
+        "title": "Doggy",
+        "value": "Walk to the dog",
+        "color": "lightgreen"
+    }]
+}
